@@ -79,16 +79,57 @@ if uploaded_file:
     st.pyplot(fig4)
 
     # === Age Statistics ===
-    st.subheader("👴 Age Analysis")
-    col4, col5 = st.columns(2)
-    with col4:
-        st.metric("Mean Age", f"{np.mean(df['age']):.1f} years")
-    with col5:
-        st.metric("Median Age", f"{np.median(df['age']):.1f} years")
+st.subheader("👴 Age Analysis")
+col4, col5 = st.columns(2)
+with col4:
+    st.metric("Mean Age", f"{np.mean(df['age']):.1f} years")
+with col5:
+    st.metric("Median Age", f"{np.median(df['age']):.1f} years")
 
+col6, col7 = st.columns(2)
+
+with col6:
     oldest = df[['name', 'age', 'networth']].sort_values(by='age', ascending=False).head(1)
-    st.write("Oldest Billionaire:")
+    st.write("🧓 Oldest Billionaire:")
     st.dataframe(oldest)
+
+with col7:
+    youngest = df[['name', 'age', 'networth']].sort_values(by='age', ascending=True).head(1)
+    st.write("🧒 Youngest Billionaire:")
+    st.dataframe(youngest)
+# === Optional Filters ===
+st.subheader("🔎 Filter Age Data by Country and Industry")
+
+filter_col1, filter_col2 = st.columns(2)
+
+with filter_col1:
+    selected_country = st.selectbox("Select a Country", options=["All"] + sorted(df['country'].dropna().unique().tolist()))
+with filter_col2:
+    selected_industry = st.selectbox("Select an Industry", options=["All"] + sorted(df['industry'].dropna().unique().tolist()))
+
+filtered_df = df.copy()
+
+if selected_country != "All":
+    filtered_df = filtered_df[filtered_df['country'] == selected_country]
+
+if selected_industry != "All":
+    filtered_df = filtered_df[filtered_df['industry'] == selected_industry]
+
+# Age Histogram
+st.subheader("📊 Age Distribution (Filtered)")
+fig_age_hist, ax_hist = plt.subplots()
+sb.histplot(filtered_df['age'], bins=20, kde=True, ax=ax_hist, color="skyblue")
+ax_hist.set_xlabel("Age")
+ax_hist.set_title("Distribution of Billionaire Ages")
+st.pyplot(fig_age_hist)
+
+# Age Boxplot
+st.subheader("📦 Age Boxplot (Filtered)")
+fig_age_box, ax_box = plt.subplots()
+sb.boxplot(x=filtered_df['age'], ax=ax_box, color="lightgreen")
+ax_box.set_title("Boxplot of Billionaire Ages")
+st.pyplot(fig_age_box)
+
 
 else:
     st.info("📤 Please upload a CSV file to begin the analysis.")
