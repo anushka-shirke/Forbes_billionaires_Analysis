@@ -98,38 +98,74 @@ with col7:
     st.write("🧒 Youngest Billionaire:")
     st.dataframe(youngest)
 # === Optional Filters ===
-st.subheader("🔎 Filter Age Data by Country and Industry")
+# === Enhanced Filters ===
+st.subheader("🔎 Filter Data by Country and Industry")
 
-filter_col1, filter_col2 = st.columns(2)
+# Multi-select filters
+selected_countries = st.multiselect(
+    "Select Countries",
+    options=sorted(df['country'].dropna().unique()),
+    default=[]
+)
+selected_industries = st.multiselect(
+    "Select Industries",
+    options=sorted(df['industry'].dropna().unique()),
+    default=[]
+)
 
-with filter_col1:
-    selected_country = st.selectbox("Select a Country", options=["All"] + sorted(df['country'].dropna().unique().tolist()))
-with filter_col2:
-    selected_industry = st.selectbox("Select an Industry", options=["All"] + sorted(df['industry'].dropna().unique().tolist()))
+# Toggle metric to explore
+metric = st.radio("Choose Metric to Analyze:", ["Age", "Net Worth"])
 
+# Apply filters
 filtered_df = df.copy()
 
-if selected_country != "All":
-    filtered_df = filtered_df[filtered_df['country'] == selected_country]
+if selected_countries:
+    filtered_df = filtered_df[filtered_df['country'].isin(selected_countries)]
 
-if selected_industry != "All":
-    filtered_df = filtered_df[filtered_df['industry'] == selected_industry]
+if selected_industries:
+    filtered_df = filtered_df[filtered_df['industry'].isin(selected_industries)]
 
-# Age Histogram
-st.subheader("📊 Age Distribution (Filtered)")
-fig_age_hist, ax_hist = plt.subplots()
-sb.histplot(filtered_df['age'], bins=20, kde=True, ax=ax_hist, color="skyblue")
-ax_hist.set_xlabel("Age")
-ax_hist.set_title("Distribution of Billionaire Ages")
-st.pyplot(fig_age_hist)
+# === Metric Plots ===
+st.subheader(f"📊 {metric} Distribution (Filtered)")
 
-# Age Boxplot
-st.subheader("📦 Age Boxplot (Filtered)")
-fig_age_box, ax_box = plt.subplots()
-sb.boxplot(x=filtered_df['age'], ax=ax_box, color="lightgreen")
-ax_box.set_title("Boxplot of Billionaire Ages")
-st.pyplot(fig_age_box)
+if metric == "Age":
+    fig_hist, ax = plt.subplots()
+    sb.histplot(filtered_df['age'].dropna(), bins=20, kde=True, color='skyblue', ax=ax)
+    ax.set_xlabel("Age")
+    ax.set_title("Age Distribution")
+    st.pyplot(fig_hist)
 
+    fig_box, ax2 = plt.subplots()
+    sb.boxplot(x=filtered_df['age'].dropna(), color='lightgreen', ax=ax2)
+    ax2.set_title("Age Boxplot")
+    st.pyplot(fig_box)
 
-else:
-    st.info("📤 Please upload a CSV file to begin the analysis.")
+elif metric == "Net Worth":
+    fig_hist, ax = plt.subplots()
+    sb.histplot(filtered_df['networth'].dropna(), bins=20, kde=True, color='orange', ax=ax)
+    ax.set_xlabel("Net Worth ($B)")
+    ax.set_title("Net Worth Distribution")
+    st.pyplot(fig_hist)
+
+    fig_box, ax2 = plt.subplots()
+    sb.boxplot(x=filtered_df['networth'].dropna(), color='gold', ax=ax2)
+    ax2.set_title("Net Worth Boxplot")
+    st.pyplot(fig_box)
+
+# === Filtered Data and Download ===
+st.subheader("🧾 Filtered Data Preview")
+st.dataframe(filtered_df)
+
+# CSV download
+@st.cache_data
+def convert_df_to_csv(df):
+    return df.to_csv(index=False).encode('utf-8')
+
+csv = convert_df_to_csv(filtered_df)
+
+st.download_button(
+    label="📥 Download Filtered Data as CSV",
+    data=csv,
+    file_name='filtered_billionaires.csv',
+    mime='text/csv'
+)
