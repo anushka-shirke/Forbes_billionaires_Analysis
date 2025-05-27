@@ -4,6 +4,9 @@ import numpy as np
 import seaborn as sb
 import matplotlib.pyplot as plt
 
+# Global chart size for consistency
+CHART_SIZE = (4, 2.5)
+
 st.set_page_config(layout="wide")
 st.title("📊 Forbes Billionaires 2022 Data Analysis")
 
@@ -36,14 +39,14 @@ if uploaded_file:
 
     # === Net Worth Distribution ===
     st.subheader("📈 Net Worth Distribution")
-    fig1, ax1 = plt.subplots(figsize=(5, 3))
+    fig1, ax1 = plt.subplots(figsize=CHART_SIZE)
     sb.histplot(df['networth'], bins=10, kde=True, ax=ax1)
     ax1.set_xlabel("Net Worth ($B)")
     st.pyplot(fig1)
 
     # === Boxplot ===
     st.subheader("📦 Net Worth Boxplot")
-    fig2, ax2 = plt.subplots(figsize=(5, 3))
+    fig2, ax2 = plt.subplots(figsize=CHART_SIZE)
     sb.boxplot(x=df['networth'], ax=ax2)
     st.pyplot(fig2)
 
@@ -63,7 +66,7 @@ if uploaded_file:
     # === Country-wise Net Worth (Top 10) ===
     st.subheader("🌎 Top 10 Countries by Total Net Worth")
     top_countries_networth = df.groupby('country')['networth'].sum().nlargest(10).reset_index()
-    fig3, ax3 = plt.subplots(figsize=(5, 3))
+    fig3, ax3 = plt.subplots(figsize=CHART_SIZE)
     sb.barplot(x='networth', y='country', data=top_countries_networth, ax=ax3)
     ax3.set_xlabel("Total Net Worth ($B)")
     ax3.set_ylabel("Country")
@@ -72,100 +75,93 @@ if uploaded_file:
     # === Average Net Worth by Industry (Top 10) ===
     st.subheader("🏭 Average Net Worth by Industry (Top 10)")
     avg_networth_industry = df.groupby('industry')['networth'].mean().sort_values(ascending=False).head(10).reset_index()
-    fig4, ax4 = plt.subplots(figsize=(5, 3))
+    fig4, ax4 = plt.subplots(figsize=CHART_SIZE)
     sb.barplot(x='networth', y='industry', data=avg_networth_industry, ax=ax4)
     ax4.set_xlabel("Average Net Worth ($B)")
     ax4.set_ylabel("Industry")
     st.pyplot(fig4)
 
     # === Age Statistics ===
-st.subheader("👴 Age Analysis")
-col4, col5 = st.columns(2)
-with col4:
-    st.metric("Mean Age", f"{np.mean(df['age']):.1f} years")
-with col5:
-    st.metric("Median Age", f"{np.median(df['age']):.1f} years")
+    st.subheader("👴 Age Analysis")
+    col4, col5 = st.columns(2)
+    with col4:
+        st.metric("Mean Age", f"{np.mean(df['age']):.1f} years")
+    with col5:
+        st.metric("Median Age", f"{np.median(df['age']):.1f} years")
 
-col6, col7 = st.columns(2)
+    col6, col7 = st.columns(2)
+    with col6:
+        oldest = df[['name', 'age', 'networth']].sort_values(by='age', ascending=False).head(1)
+        st.write("🧓 Oldest Billionaire:")
+        st.dataframe(oldest)
 
-with col6:
-    oldest = df[['name', 'age', 'networth']].sort_values(by='age', ascending=False).head(1)
-    st.write("🧓 Oldest Billionaire:")
-    st.dataframe(oldest)
+    with col7:
+        youngest = df[['name', 'age', 'networth']].sort_values(by='age', ascending=True).head(1)
+        st.write("🧒 Youngest Billionaire:")
+        st.dataframe(youngest)
 
-with col7:
-    youngest = df[['name', 'age', 'networth']].sort_values(by='age', ascending=True).head(1)
-    st.write("🧒 Youngest Billionaire:")
-    st.dataframe(youngest)
-# === Optional Filters ===
-# === Enhanced Filters ===
-st.subheader("🔎 Filter Data by Country and Industry")
+    # === Filter Section ===
+    st.subheader("🔎 Filter Data by Country and Industry")
 
-# Multi-select filters
-selected_countries = st.multiselect(
-    "Select Countries",
-    options=sorted(df['country'].dropna().unique()),
-    default=[]
-)
-selected_industries = st.multiselect(
-    "Select Industries",
-    options=sorted(df['industry'].dropna().unique()),
-    default=[]
-)
+    selected_countries = st.multiselect(
+        "Select Countries",
+        options=sorted(df['country'].dropna().unique()),
+        default=[]
+    )
+    selected_industries = st.multiselect(
+        "Select Industries",
+        options=sorted(df['industry'].dropna().unique()),
+        default=[]
+    )
 
-# Toggle metric to explore
-metric = st.radio("Choose Metric to Analyze:", ["Age", "Net Worth"])
+    metric = st.radio("Choose Metric to Analyze:", ["Age", "Net Worth"])
 
-# Apply filters
-filtered_df = df.copy()
+    filtered_df = df.copy()
+    if selected_countries:
+        filtered_df = filtered_df[filtered_df['country'].isin(selected_countries)]
+    if selected_industries:
+        filtered_df = filtered_df[filtered_df['industry'].isin(selected_industries)]
 
-if selected_countries:
-    filtered_df = filtered_df[filtered_df['country'].isin(selected_countries)]
+    # === Filtered Metric Plots ===
+    st.subheader(f"📊 {metric} Distribution (Filtered)")
 
-if selected_industries:
-    filtered_df = filtered_df[filtered_df['industry'].isin(selected_industries)]
+    if metric == "Age":
+        fig_hist, ax = plt.subplots(figsize=CHART_SIZE)
+        sb.histplot(filtered_df['age'].dropna(), bins=20, kde=True, color='skyblue', ax=ax)
+        ax.set_xlabel("Age")
+        ax.set_title("Age Distribution")
+        st.pyplot(fig_hist)
 
-# === Metric Plots ===
-st.subheader(f"📊 {metric} Distribution (Filtered)")
+        fig_box, ax2 = plt.subplots(figsize=CHART_SIZE)
+        sb.boxplot(x=filtered_df['age'].dropna(), color='lightgreen', ax=ax2)
+        ax2.set_title("Age Boxplot")
+        st.pyplot(fig_box)
 
-if metric == "Age":
-    fig_hist, ax = plt.subplots(figsize=(5, 3))
-    sb.histplot(filtered_df['age'].dropna(), bins=20, kde=True, color='skyblue', ax=ax)
-    ax.set_xlabel("Age")
-    ax.set_title("Age Distribution")
-    st.pyplot(fig_hist)
+    elif metric == "Net Worth":
+        fig_hist, ax = plt.subplots(figsize=CHART_SIZE)
+        sb.histplot(filtered_df['networth'].dropna(), bins=20, kde=True, color='orange', ax=ax)
+        ax.set_xlabel("Net Worth ($B)")
+        ax.set_title("Net Worth Distribution")
+        st.pyplot(fig_hist)
 
-    fig_box, ax2 = plt.subplots(figsize=(5, 3))
-    sb.boxplot(x=filtered_df['age'].dropna(), color='lightgreen', ax=ax2)
-    ax2.set_title("Age Boxplot")
-    st.pyplot(fig_box)
+        fig_box, ax2 = plt.subplots(figsize=CHART_SIZE)
+        sb.boxplot(x=filtered_df['networth'].dropna(), color='gold', ax=ax2)
+        ax2.set_title("Net Worth Boxplot")
+        st.pyplot(fig_box)
 
-elif metric == "Net Worth":
-    fig_hist, ax = plt.subplots(figsize=(5, 3))
-    sb.histplot(filtered_df['networth'].dropna(), bins=20, kde=True, color='orange', ax=ax)
-    ax.set_xlabel("Net Worth ($B)")
-    ax.set_title("Net Worth Distribution")
-    st.pyplot(fig_hist)
+    # === Filtered Data and Download ===
+    st.subheader("🧾 Filtered Data Preview")
+    st.dataframe(filtered_df)
 
-    fig_box, ax2 = plt.subplots(figsize=(5, 3))
-    sb.boxplot(x=filtered_df['networth'].dropna(), color='gold', ax=ax2)
-    ax2.set_title("Net Worth Boxplot")
-    st.pyplot(fig_box)
+    @st.cache_data
+    def convert_df_to_csv(df):
+        return df.to_csv(index=False).encode('utf-8')
 
-# === Filtered Data and Download ===
-st.subheader("🧾 Filtered Data Preview")
-st.dataframe(filtered_df)
+    csv = convert_df_to_csv(filtered_df)
 
-# CSV download
-@st.cache_data
-def convert_df_to_csv(df):
-    return df.to_csv(index=False).encode('utf-8')
-
-csv = convert_df_to_csv(filtered_df)
-
-st.download_button(
-    label="📥 Download Filtered Data as CSV",
-    data=csv,
-    file_name='filtered_billionaires.csv',
-    mime='text/csv'
-)
+    st.download_button(
+        label="📥 Download Filtered Data as CSV",
+        data=csv,
+        file_name='filtered_billionaires.csv',
+        mime='text/csv'
+    )
