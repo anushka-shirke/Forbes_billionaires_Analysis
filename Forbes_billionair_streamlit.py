@@ -36,14 +36,14 @@ if uploaded_file:
 
     # === Net Worth Distribution ===
     st.subheader("📈 Net Worth Distribution")
-    fig1, ax1 = plt.subplots()
+    fig1, ax1 = plt.subplots(figsize=(5, 3))
     sb.histplot(df['networth'], bins=10, kde=True, ax=ax1)
     ax1.set_xlabel("Net Worth ($B)")
     st.pyplot(fig1)
 
     # === Boxplot ===
     st.subheader("📦 Net Worth Boxplot")
-    fig2, ax2 = plt.subplots()
+    fig2, ax2 = plt.subplots(figsize=(5, 3))
     sb.boxplot(x=df['networth'], ax=ax2)
     st.pyplot(fig2)
 
@@ -63,7 +63,7 @@ if uploaded_file:
     # === Country-wise Net Worth (Top 10) ===
     st.subheader("🌎 Top 10 Countries by Total Net Worth")
     top_countries_networth = df.groupby('country')['networth'].sum().nlargest(10).reset_index()
-    fig3, ax3 = plt.subplots()
+    fig3, ax3 = plt.subplots(figsize=(5, 3))
     sb.barplot(x='networth', y='country', data=top_countries_networth, ax=ax3)
     ax3.set_xlabel("Total Net Worth ($B)")
     ax3.set_ylabel("Country")
@@ -72,7 +72,7 @@ if uploaded_file:
     # === Average Net Worth by Industry (Top 10) ===
     st.subheader("🏭 Average Net Worth by Industry (Top 10)")
     avg_networth_industry = df.groupby('industry')['networth'].mean().sort_values(ascending=False).head(10).reset_index()
-    fig4, ax4 = plt.subplots()
+    fig4, ax4 = plt.subplots(figsize=(5, 3))
     sb.barplot(x='networth', y='industry', data=avg_networth_industry, ax=ax4)
     ax4.set_xlabel("Average Net Worth ($B)")
     ax4.set_ylabel("Industry")
@@ -129,25 +129,25 @@ if selected_industries:
 st.subheader(f"📊 {metric} Distribution (Filtered)")
 
 if metric == "Age":
-    fig_hist, ax = plt.subplots()
+    fig_hist, ax = plt.subplots(figsize=(5, 3))
     sb.histplot(filtered_df['age'].dropna(), bins=20, kde=True, color='skyblue', ax=ax)
     ax.set_xlabel("Age")
     ax.set_title("Age Distribution")
     st.pyplot(fig_hist)
 
-    fig_box, ax2 = plt.subplots()
+    fig_box, ax2 = plt.subplots(figsize=(5, 3))
     sb.boxplot(x=filtered_df['age'].dropna(), color='lightgreen', ax=ax2)
     ax2.set_title("Age Boxplot")
     st.pyplot(fig_box)
 
 elif metric == "Net Worth":
-    fig_hist, ax = plt.subplots()
+    fig_hist, ax = plt.subplots(figsize=(5, 3))
     sb.histplot(filtered_df['networth'].dropna(), bins=20, kde=True, color='orange', ax=ax)
     ax.set_xlabel("Net Worth ($B)")
     ax.set_title("Net Worth Distribution")
     st.pyplot(fig_hist)
 
-    fig_box, ax2 = plt.subplots()
+    fig_box, ax2 = plt.subplots(figsize=(5, 3))
     sb.boxplot(x=filtered_df['networth'].dropna(), color='gold', ax=ax2)
     ax2.set_title("Net Worth Boxplot")
     st.pyplot(fig_box)
