@@ -40,13 +40,14 @@ if uploaded_file:
     sb.histplot(df['networth'], bins=10, kde=True, ax=ax1)
     ax1.set_xlabel("Net Worth ($B)")
     fig1.tight_layout()
-    st.pyplot(fig1)
+    st.pyplot(fig1, use_container_width=False)
+
 
     st.subheader("📦 Net Worth Boxplot")
     fig2, ax2 = plt.subplots(figsize=CHART_SIZE, dpi=100)
     sb.boxplot(x=df['networth'], ax=ax2)
     fig2.tight_layout()
-    st.pyplot(fig2)
+    st.pyplot(fig2, use_container_width=False)
 
     st.subheader("👑 Top 10 Billionaires by Net Worth")
     top_billionaires = df.groupby('name')['networth'].sum().nlargest(10).reset_index()
@@ -66,7 +67,7 @@ if uploaded_file:
     ax3.set_xlabel("Total Net Worth ($B)")
     ax3.set_ylabel("Country")
     fig3.tight_layout()
-    st.pyplot(fig3)
+    st.pyplot(fig3, use_container_width=False)
 
     st.subheader("🏭 Average Net Worth by Industry (Top 10)")
     avg_networth_industry = df.groupby('industry')['networth'].mean().sort_values(ascending=False).head(10).reset_index()
@@ -75,7 +76,7 @@ if uploaded_file:
     ax4.set_xlabel("Average Net Worth ($B)")
     ax4.set_ylabel("Industry")
     fig4.tight_layout()
-    st.pyplot(fig4)
+    st.pyplot(fig4, use_container_width=False)
 
     st.subheader("👴 Age Analysis")
     col4, col5 = st.columns(2)
@@ -114,13 +115,13 @@ if uploaded_file:
         ax.set_xlabel("Age")
         ax.set_title("Age Distribution")
         fig_hist.tight_layout()
-        st.pyplot(fig_hist)
+        st.pyplot(fig_hist, use_container_width=False)
 
         fig_box, ax2 = plt.subplots(figsize=CHART_SIZE, dpi=100)
         sb.boxplot(x=filtered_df['age'].dropna(), color='lightgreen', ax=ax2)
         ax2.set_title("Age Boxplot")
         fig_box.tight_layout()
-        st.pyplot(fig_box)
+        st.pyplot(fig_box, use_container_width=False)
 
     elif metric == "Net Worth":
         fig_hist, ax = plt.subplots(figsize=CHART_SIZE, dpi=100)
@@ -128,13 +129,13 @@ if uploaded_file:
         ax.set_xlabel("Net Worth ($B)")
         ax.set_title("Net Worth Distribution")
         fig_hist.tight_layout()
-        st.pyplot(fig_hist)
+        st.pyplot(fig_hist, use_container_width=False)
 
         fig_box, ax2 = plt.subplots(figsize=CHART_SIZE, dpi=100)
         sb.boxplot(x=filtered_df['networth'].dropna(), color='gold', ax=ax2)
         ax2.set_title("Net Worth Boxplot")
         fig_box.tight_layout()
-        st.pyplot(fig_box)
+        st.pyplot(fig_box, use_container_width=False)
 
     st.subheader("🧾 Filtered Data Preview")
     st.dataframe(filtered_df)
