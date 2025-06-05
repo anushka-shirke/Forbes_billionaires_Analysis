@@ -5,45 +5,45 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
 ~ Project Structure ~
 The analysis is structured around the following key areas:
 
-1. Data Preparation
--Handling Missing Values:
-Identified and addressed missing values using techniques like forward-fill to maintain data integrity.
+ 1. Data Preparation
+    -Handling Missing Values:
+      Identified and addressed missing values using techniques like forward-fill to maintain data integrity.
 
--Data Type Conversion:
-Converted essential columns such as Net Worth from strings to numeric types for proper analysis.
+    -Data Type Conversion:
+      Converted essential columns such as Net Worth from strings to numeric types for proper analysis.
 
-2. Exploratory Data Analysis (EDA)
--Summary Statistics:
-Calculated key metrics (mean, median, min, max, standard deviation) for Net Worth to understand central tendencies.
+  3. Exploratory Data Analysis (EDA)
+     -Summary Statistics:
+       Calculated key metrics (mean, median, min, max, standard deviation) for Net Worth to understand central tendencies.
 
--Wealth Distribution:
-Visualized the distribution of billionaire net worth using histograms and box plots to identify skewness and outliers.
+     -Wealth Distribution:
+       Visualized the distribution of billionaire net worth using histograms and box plots to identify skewness and outliers.
 
--Top 10 Richest Billionaires:
-Extracted the top 10 individuals with the highest net worth using nlargest.
+     -Top 10 Richest Billionaires:
+       Extracted the top 10 individuals with the highest net worth using nlargest.
 
-3. Geographic Analysis
--Global Distribution:
-Analyzed how billionaires are distributed across continents and regions.
+  4. Geographic Analysis
+     -Global Distribution:
+       Analyzed how billionaires are distributed across continents and regions.
 
--Top Countries by Count:
-Identified the top 10 countries with the highest number of billionaires using value_counts().
+     -Top Countries by Count: 
+        Identified the top 10 countries with the highest number of billionaires using value_counts().
 
--Billionaire Wealth by Country:
-Visualized country-wise billionaire net worth distribution using bar plots.
+     -Billionaire Wealth by Country:
+        Visualized country-wise billionaire net worth distribution using bar plots.
 
-4. Industry Analysis
--Top Industries:
-Determined which industries produce the most billionaires.
+  5. Industry Analysis
+     -Top Industries:
+       Determined which industries produce the most billionaires.
 
--Net Worth by Industry:
-Calculated and visualized the average billionaire net worth per industry to understand wealth concentration by sector.
+     -Net Worth by Industry:
+       Calculated and visualized the average billionaire net worth per industry to understand wealth concentration by sector.
 
-5. Age-Based Analysis
--Average & Median Age:
-Computed the mean and median age of billionaires to understand age trends.
--Youngest and Oldest Billionaires:
-Identified individuals with the minimum and maximum ages in the dataset using nsmallest() and nlargest().
+  6. Age-Based Analysis
+     -Average & Median Age:
+       Computed the mean and median age of billionaires to understand age trends.
+     -Youngest and Oldest Billionaires:
+       Identified individuals with the minimum and maximum ages in the dataset using nsmallest() and nlargest().
 
 Tools & Libraries Used:
 
