@@ -1,12 +1,12 @@
-Forbes Billionaires Analysis
+# Forbes Billionaires Analysis
 
 This repository contains an end-to-end analysis of a dataset on billionaires around the world. The goal of this project is to extract meaningful insights regarding the demographics, geography, industries, and wealth distribution of billionaires using data preprocessing, exploratory data analysis (EDA), and visualizations.
 
-~ Project Structure ~
+# Project Structure
 
  The analysis is structured around the following key areas:
 
- 1. Data Preparation
+ # 1. Data Preparation
 
     -Handling Missing Values:
       Identified and addressed missing values using techniques like forward-fill to maintain data integrity.
@@ -14,7 +14,7 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
     -Data Type Conversion:
       Converted essential columns such as Net Worth from strings to numeric types for proper analysis.
 
-  3. Exploratory Data Analysis (EDA)
+  # 2. Exploratory Data Analysis (EDA)
 
      -Summary Statistics:
        Calculated key metrics (mean, median, min, max, standard deviation) for Net Worth to understand central tendencies.
@@ -25,7 +25,7 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
      -Top 10 Richest Billionaires:
        Extracted the top 10 individuals with the highest net worth using nlargest.
 
-  5. Geographic Analysis
+  # 3. Geographic Analysis
 
      -Global Distribution:
        Analyzed how billionaires are distributed across continents and regions.
@@ -36,7 +36,7 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
      -Billionaire Wealth by Country:
         Visualized country-wise billionaire net worth distribution using bar plots.
 
-  7. Industry Analysis
+  # 4. Industry Analysis
 
      -Top Industries:
        Determined which industries produce the most billionaires.
@@ -44,7 +44,7 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
      -Net Worth by Industry:
        Calculated and visualized the average billionaire net worth per industry to understand wealth concentration by sector.
 
-  9. Age-Based Analysis
+  # 5. Age-Based Analysis
 
      -Average & Median Age:
        Computed the mean and median age of billionaires to understand age trends.
@@ -55,7 +55,7 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
 
 
 
-Tools & Libraries Used:
+# Tools & Libraries Used:
 
   -Pandas for data manipulation
 
@@ -66,7 +66,7 @@ Tools & Libraries Used:
   -Jupyter Notebook / Python for implementation
 
 
-Insights:
+# Insights:
 
   -Most billionaires are concentrated in a few key countries like the United States, China, and India.
 
@@ -77,14 +77,14 @@ Insights:
   -The average age of billionaires tends to be around the mid-60s, but some individuals attain billionaire status in their 20s or 30s.
 
 
-Files Included:
+# Files Included:
 
   -Forbes_billionaires_Analysis.ipynb – Jupyter notebook containing the complete analysis
 
   -README.md – This file, summarizing the methodology and findings
 
 
-Future Scope:
+# Future Scope:
 
   -Time-series analysis if historical data is available
 
