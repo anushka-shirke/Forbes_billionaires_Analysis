@@ -48,8 +48,11 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
 
      -Average & Median Age:
        Computed the mean and median age of billionaires to understand age trends.
+     
      -Youngest and Oldest Billionaires:
        Identified individuals with the minimum and maximum ages in the dataset using nsmallest() and nlargest().
+
+
 
 
 Tools & Libraries Used:
