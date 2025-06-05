@@ -1,4 +1,5 @@
 Forbes Billionaires Analysis
+
 This repository contains an end-to-end analysis of a dataset on billionaires around the world. The goal of this project is to extract meaningful insights regarding the demographics, geography, industries, and wealth distribution of billionaires using data preprocessing, exploratory data analysis (EDA), and visualizations.
 
  Project Structure
