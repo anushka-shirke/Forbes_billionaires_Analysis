@@ -51,6 +51,7 @@ This repository contains an end-to-end analysis of a dataset on billionaires aro
      -Youngest and Oldest Billionaires:
        Identified individuals with the minimum and maximum ages in the dataset using nsmallest() and nlargest().
 
+
 Tools & Libraries Used:
 
   -Pandas for data manipulation
@@ -60,6 +61,7 @@ Tools & Libraries Used:
   -NumPy for numerical operations
 
   -Jupyter Notebook / Python for implementation
+
 
 Insights:
 
@@ -71,11 +73,13 @@ Insights:
 
   -The average age of billionaires tends to be around the mid-60s, but some individuals attain billionaire status in their 20s or 30s.
 
+
 Files Included:
 
   -Forbes_billionaires_Analysis.ipynb – Jupyter notebook containing the complete analysis
 
   -README.md – This file, summarizing the methodology and findings
+
 
 Future Scope:
 
