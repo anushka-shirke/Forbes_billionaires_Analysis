@@ -53,24 +53,33 @@ The analysis is structured around the following key areas:
 Tools & Libraries Used:
 
 -Pandas for data manipulation
+
 -Matplotlib & Seaborn for data visualization
+
 -NumPy for numerical operations
+
 -Jupyter Notebook / Python for implementation
 
 Insights:
 
 -Most billionaires are concentrated in a few key countries like the United States, China, and India.
+
 -Technology and Finance are leading industries in terms of both number of billionaires and average net worth.
+
 -The net worth distribution is heavily skewed, with a few ultra-wealthy individuals.
+
 -The average age of billionaires tends to be around the mid-60s, but some individuals attain billionaire status in their 20s or 30s.
 
 Files Included:
 
 -Forbes_billionaires_Analysis.ipynb – Jupyter notebook containing the complete analysis
+
 -README.md – This file, summarizing the methodology and findings
 
 Future Scope:
 
 -Time-series analysis if historical data is available
+
 -Deep dive into gender, education, or inheritance-based breakdowns
+
 -Use of interactive dashboards with Plotly or Power BI
